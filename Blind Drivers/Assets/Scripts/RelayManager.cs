@@ -16,7 +16,7 @@ public class RelayManager : MonoBehaviour
     [SerializeField] private TMP_InputField joinInput;
     [SerializeField] private TextMeshProUGUI codeText;
 
-    private async void Start()
+    async void Start()
     {
         await UnityServices.InitializeAsync();
 
@@ -26,7 +26,7 @@ public class RelayManager : MonoBehaviour
         joinBtn.onClick.AddListener(() => JoinRelay(joinInput.text));
     }
 
-    private async void CreateRelay()
+    async void CreateRelay()
     {
         Allocation allocation = await RelayService.Instance.CreateAllocationAsync(3);
         string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
@@ -39,7 +39,7 @@ public class RelayManager : MonoBehaviour
         NetworkManager.Singleton.StartHost();
     }
 
-    private async void JoinRelay(string joinCode)
+    async void JoinRelay(string joinCode)
     {
         var joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
 

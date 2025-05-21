@@ -1301,6 +1301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   gateAmount: 0
+  scoreTextTMP: {fileID: 733417018}
 --- !u!65 &600113235
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1637,7 +1638,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &733417018
 MonoBehaviour:
   m_ObjectHideFlags: 0
