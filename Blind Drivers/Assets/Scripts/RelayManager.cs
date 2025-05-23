@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -7,9 +8,10 @@ using Unity.Services.Core;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class RelayManager : MonoBehaviour
+public class RelayManager : NetworkBehaviour
 {
     [SerializeField] private Button hostBtn;
     [SerializeField] private Button joinBtn;
@@ -32,11 +34,15 @@ public class RelayManager : MonoBehaviour
         string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
         codeText.text = "Code: " + joinCode;
 
+
         var relayServerData = AllocationUtils.ToRelayServerData(allocation, "dtls");
 
         NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
         NetworkManager.Singleton.StartHost();
+
+        StartCoroutine(WaitToChangeScene());
+
     }
 
     async void JoinRelay(string joinCode)
@@ -48,5 +54,12 @@ public class RelayManager : MonoBehaviour
         NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
         NetworkManager.Singleton.StartClient();
+        NetworkManager.SceneManager.LoadScene("Gameplay", LoadSceneMode.Single);
+    }
+
+    private IEnumerator WaitToChangeScene()
+    {
+        yield return new WaitForSeconds(5f);
+        NetworkManager.SceneManager.LoadScene("Gameplay", LoadSceneMode.Single);
     }
 }

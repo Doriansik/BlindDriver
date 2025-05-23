@@ -31,14 +31,13 @@ public class PlayerNetwork : NetworkBehaviour
             moveSpeed *= 1.25f;
         }
 
-        if(transform.position.y < -1f)
+        if(transform.position.y < -5f)
         {
             transform.position = startPos;
             moveSpeed = 3f;
         }
 
         Debug.DrawRay(transform.position, lastMoveDir * 2f, Color.red);
-
     }
     private void HandleInput()
     {
