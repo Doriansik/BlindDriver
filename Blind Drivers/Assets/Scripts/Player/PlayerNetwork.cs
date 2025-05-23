@@ -9,9 +9,14 @@ public class PlayerNetwork : NetworkBehaviour
 
     private float moveX;
     private float moveZ;
-    private Vector3 moveDir;
     private Vector3 lastMoveDir = Vector3.forward;
     private Vector3 startPos;
+    private Rigidbody rb;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
     private void Start()
     {
@@ -35,6 +40,7 @@ public class PlayerNetwork : NetworkBehaviour
         {
             transform.position = startPos;
             moveSpeed = 3f;
+            rb.linearVelocity = Vector3.zero;
         }
 
         Debug.DrawRay(transform.position, lastMoveDir * 2f, Color.red);
@@ -47,14 +53,14 @@ public class PlayerNetwork : NetworkBehaviour
 
     private void HandleMovement()
     {
-        Vector3 localMove = transform.forward * moveZ + transform.right * moveX;
+        Vector3 moveDir = transform.forward * moveZ + transform.right * moveX;
 
-        if (localMove != Vector3.zero)
+        if (moveDir != Vector3.zero)
         {
-            lastMoveDir = localMove.normalized;
+            lastMoveDir = moveDir.normalized;
         }
 
-        transform.position += localMove.normalized * moveSpeed * Time.deltaTime;
+        rb.MovePosition(rb.position + moveDir * moveSpeed * Time.deltaTime);
     }
 
 
