@@ -28,7 +28,6 @@ public class PlayerNetwork : NetworkBehaviour
         if (!IsOwner) return;
         
         HandleInput();
-        HandleMovement();
         HandleRotation();
 
         if (Input.GetKeyDown(KeyCode.Space)) 
@@ -45,6 +44,12 @@ public class PlayerNetwork : NetworkBehaviour
 
         Debug.DrawRay(transform.position, lastMoveDir * 2f, Color.red);
     }
+
+    private void FixedUpdate()
+    {
+        HandleMovement();
+    }
+
     private void HandleInput()
     {
         moveX = Input.GetAxis("Horizontal");
