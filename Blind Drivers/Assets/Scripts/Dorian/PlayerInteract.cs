@@ -10,20 +10,24 @@ public class PlayerInteract : MonoBehaviour
 
     private void Update()
     {
-        PlayerInteraction();
+        HandleInteraction();
     }
 
-    private void PlayerInteraction()
+    private void HandleInteraction()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (heldItem == null)
+            IInteractable interactable = GetInteractableObject();
+            if (interactable != null)
             {
-                IInteractable interactable = GetInteractableObject();
-                if (interactable != null && interactable is IPickable pickable)
+                if (heldItem == null && interactable is IPickable pickable)
                 {
                     heldItem = pickable;
                     heldItem.PickUpItem(holdPoint);
+                }
+                else
+                {
+                    interactable.Interact(transform);
                 }
             }
         }

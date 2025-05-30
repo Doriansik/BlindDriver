@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IControllable
 {
     [SerializeField] private float moveSpeed;
     [SerializeField] private Transform orientation;
@@ -37,5 +37,14 @@ public class PlayerMovement : MonoBehaviour
         moveDir = orientation.forward * moveZ + orientation.right * moveX;
 
         rb.MovePosition(rb.position + moveDir.normalized * moveSpeed * Time.deltaTime);
+    }
+
+    public void EnableControl()
+    {
+        enabled = true;
+    }
+    public void DisableControl()
+    {
+        enabled = false;
     }
 }
